@@ -21,9 +21,6 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.DECIMAL(10, 0),
         allowNull: false,
       },
-      calificaciones: {
-        type: DataTypes.JSON,
-      },
     },
     {
       sequelize,
