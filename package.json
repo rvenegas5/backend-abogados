@@ -1,0 +1,25 @@
+{
+  "name": "backend-abonet",
+  "version": "1.0.0",
+  "description": "Backend for Abonet App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rvenegas5/backend-abonet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rvenegas5/backend-abonet/issues"
+  },
+  "homepage": "https://github.com/rvenegas5/backend-abonet#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^12.0.4",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3"
+  }
+}
