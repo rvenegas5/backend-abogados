@@ -37,6 +37,7 @@ CREATE TABLE `calificacion`(
 	`id` int(11) NOT NULL AUTO_INCREMENT,
     `id_usuario`int(11) NOT NULL,
     `estrellas` DECIMAL NOT NULL,
+    `calificaciones` json DEFAULT NULL,
 	`createdAt` datetime DEFAULT NULL,
     `updatedAt` datetime DEFAULT NULL,
     PRIMARY KEY (`id`),
