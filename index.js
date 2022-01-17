@@ -9,6 +9,7 @@ const db = require("./models");
 app.use(cors());
 app.use(express.json());
 
+app.use("/auth", require("./routes/auth"));
 app.use("/usuario", require("./routes/usuario"));
 
 db.sequelize.sync().then(() => {

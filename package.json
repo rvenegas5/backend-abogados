@@ -18,10 +18,12 @@
   },
   "homepage": "https://github.com/rvenegas5/backend-abonet#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^12.0.4",
     "express": "^4.17.2",
     "express-validator": "^6.14.0",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.15",
