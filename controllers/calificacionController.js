@@ -10,14 +10,16 @@ exports.getEstrellas = async (req, res) => {
   try {
 
    
-    let Stars =  db.calificacion.findAll({
+    let Stars =  await db.calificacion.findAll({
         where: {
             id_abogado: req.params.id
           }
       
     });
+    console.log(Stars)
 
     if (_.isEmpty(Stars)) {
+        console.log("xd")
         Stars = [];
     }
     const response = {
