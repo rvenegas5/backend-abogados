@@ -7,11 +7,11 @@ module.exports = {
     ROL: {
       CLIENTE: {
         ROL_ID: 1,
-        ROL: "ADMINISTRADOR_FUNDACION",
+        ROL: "CLIENTE",
       },
       ABOGADO: {
         ROL_ID: 2,
-        ROL: "DONADOR",
+        ROL: "ABOGADO",
       },
     },
   };
