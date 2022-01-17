@@ -43,14 +43,3 @@ CREATE TABLE `calificacion`(
     PRIMARY KEY (`id`),
     FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON UPDATE CASCADE
 );
-
-DROP TABLE IF EXISTS `post`;
-CREATE TABLE `post`(
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-    `id_usuario`int(11) NOT NULL,
-    `titulo` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `descripcion` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON UPDATE CASCADE
-);
-
