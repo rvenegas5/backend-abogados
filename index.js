@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use("/auth", require("./routes/auth"));
 app.use("/usuario", require("./routes/usuario"));
-
+app.use("/calificacion", require("./routes/calificacion"));
 db.sequelize.sync().then(() => {
   app.listen(PORT, () => {
     console.log(`Servidor ejecutandose en el puerto ${PORT}`);
