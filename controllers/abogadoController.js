@@ -125,7 +125,7 @@ exports.getAbogado = async (req, res) => {
         type: QueryTypes.SELECT,
       }
     );
-    
+
     const response = {
       result: responseBody,
     };

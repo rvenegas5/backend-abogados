@@ -14,6 +14,6 @@ router.get("/:id", AsyncWrapper(usuarioController.getAbogado));
 
 router.get("/", AsyncWrapper(abogadoController.getAllAbogados));
 
-router.get("/:usuario", AsyncWrapper(abogadoController.getAbogado));
+router.get("/abogado/:usuario", AsyncWrapper(abogadoController.getAbogado));
 
 module.exports = router;
