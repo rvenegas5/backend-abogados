@@ -17,10 +17,8 @@ exports.getAbogado = async (req, res) => {
     if (_.isEmpty(UserInfo)) {
       UserInfo = [];
     }
-    const response = {
-      result: UserInfo,
-    };
-    return res.send(response);
+    
+    return res.send(UserInfo);
   } catch (error) {
     console.log("ERROR", error);
     const responseError = {
