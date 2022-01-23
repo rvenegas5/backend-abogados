@@ -10,6 +10,7 @@ const router = express.Router();
 
 // router.get("/:id", passport, AsyncWrapper(usuarioController.getInfo));
 
-router.get("/:usuario", AsyncWrapper(abogadoController.getAbogado));
+router.get("/:id", AsyncWrapper(abogadoController.getAbogadobyid));
+
 
 module.exports = router;

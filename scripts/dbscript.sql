@@ -26,6 +26,7 @@ CREATE TABLE `abogado`(
     `linkedin` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
     `especializacion` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
     `bufete` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `imagen` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
 	`createdAt` datetime DEFAULT NULL,
 	`updatedAt` datetime DEFAULT NULL,
     PRIMARY KEY (`id`),
@@ -34,12 +35,12 @@ CREATE TABLE `abogado`(
 
 DROP TABLE IF EXISTS `calificacion`;
 CREATE TABLE `calificacion`(
-	`id` int(11) NOT NULL AUTO_INCREMENT,
     `id_usuario`int(11) NOT NULL,
+    `id_abogado`int(11) NOT NULL,
     `estrellas` DECIMAL NOT NULL,
-    `calificaciones` json DEFAULT NULL,
 	`createdAt` datetime DEFAULT NULL,
     `updatedAt` datetime DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON UPDATE CASCADE
+    FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON UPDATE CASCADE,
+    FOREIGN KEY (`id_abogado`) REFERENCES `abogado` (`id`) ON UPDATE CASCADE,
+	PRIMARY KEY  (`id_usuario`,`id_abogado`)
 );

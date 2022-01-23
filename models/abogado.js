@@ -26,6 +26,10 @@ module.exports = function(sequelize, DataTypes) {
     bufete: {
       type: DataTypes.STRING(100),
       allowNull: false
+    },
+    imagen: {
+      type: DataTypes.STRING(200),
+      allowNull: false
     }
   }, {
     sequelize,
