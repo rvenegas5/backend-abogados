@@ -1,6 +1,10 @@
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
+const url = 'localhost:50255';
+dynamic usuarioData;
+dynamic usuarioPass;
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -34,64 +38,99 @@ class _MyHomePageState extends State<MyHomePage> {
   final passText = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                controller: userText,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Correo electronico',
-                    hintText: 'Ingrese un usuario valido'),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                controller: passText,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Contraseña',
-                    hintText: 'Ingrese su contraseña'),
-              ),
-            ),
-            Container(
-              height: 50,
-              width: 250,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      if (userText.text == 'developer' &&
-                          passText.text == '@instagram22') {
-                        return AlertDialog(
-                          content: Text('Acceso Correcto'),
-                        );
-                      } else {
-                        return AlertDialog(
-                          content: Text('Datos Incorrectos'),
-                        );
-                      }
-                      ;
-                    },
-                  );
-                },
-                child: Text(
-                  'Iniciar Sesion',
-                  style: TextStyle(color: Colors.white, fontSize: 25),
+    return FutureBuilder<String>(
+        future: login(), // function where you call your api
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: Text('Please wait its loading...'));
+          } else {
+            return Scaffold(
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Abonet',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const Text(
+                      'Login',
+                      style: TextStyle(color: Colors.grey, fontSize: 30),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: TextField(
+                        controller: userText,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Correo electronico',
+                            hintText: 'Ingrese un usuario valido'),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: TextField(
+                        controller: passText,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Contraseña',
+                            hintText: 'Ingrese su contraseña'),
+                      ),
+                    ),
+                    Container(
+                      height: 50,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: TextButton(
+                        onPressed: () {
+                          usuarioData = userText.text;
+                          usuarioPass = passText.text;
+                          login();
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              if (userText.text == 'developer' &&
+                                  passText.text == '@instagram22') {
+                                return AlertDialog(
+                                  content: Text('Acceso Correcto'),
+                                );
+                              } else {
+                                return AlertDialog(
+                                  content: Text('Datos Incorrectos'),
+                                );
+                              }
+                              ;
+                            },
+                          );
+                        },
+                        child: Text(
+                          'Login',
+                          style: TextStyle(color: Colors.white, fontSize: 25),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
+            );
+          }
+        });
+  }
+}
+
+Future<String> login() async {
+  //usuarioData = email;
+  //usuarioPass = password;
+  var response =
+      await http.get(Uri.http(url, '/auth/login/' + usuarioData.toString()));
+  if (response.statusCode == 200) {
+    return 'Acceso Exitoso';
+  } else {
+    return 'Acceso Denegado';
   }
 }

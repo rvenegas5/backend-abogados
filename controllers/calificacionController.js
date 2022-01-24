@@ -22,10 +22,8 @@ exports.getEstrellas = async (req, res) => {
         console.log("xd")
         Stars = [];
     }
-    const response = {
-      result: Stars,
-    };
-    return res.send(response);
+  
+    return res.send(Stars);
   } catch (error) {
     console.log("ERROR", error);
     const responseError = {
