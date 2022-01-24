@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
-const url = 'localhost:50255';
+const url = 'localhost:59132';
 dynamic usuarioData;
 dynamic usuarioPass;
 dynamic res;
@@ -94,8 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          if (userText.text == "rarivera@outlook.com" &&
-                              passText.text == "12345") {
+                          if (res) {
                             return AlertDialog(
                               content: Text('Accesso Exitoso'),
                             );
@@ -129,8 +128,10 @@ Future<void> login(String email, String password) async {
   print("entro");
   var response = await http.get(Uri.http(url, '/auth/login/'));
   if (response.statusCode == 200) {
+    res = true;
     print("Todo OK");
   } else {
+    res = false;
     print("Todo no OK");
   }
 }
