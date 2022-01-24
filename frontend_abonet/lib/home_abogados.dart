@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:prueba/models/Abogado.dart';
 import 'dart:convert' as convert;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'dart:math';
 
 const url = 'localhost:8181';
 dynamic idUsuarioActual;
@@ -80,7 +81,7 @@ class _MostrarAbogadoState extends State<MostrarAbogado> {
               ])),
               body: Center(
                 child: Container(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(30.0),
                   child: ListView(children: _listAbogados(snapshot.data)),
                 ),
               ),
@@ -91,7 +92,19 @@ class _MostrarAbogadoState extends State<MostrarAbogado> {
 
   List<Widget> _listAbogados(data) {
     List<Widget> abogados = [];
+    abogados.add(Text(
+      'ABOGADOS DISPONIBLES',
+      textAlign: TextAlign.center,
+      overflow: TextOverflow.ellipsis,
+      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+    ));
+    abogados.add(Text(
+      'Puedes comunicarte con cualquier abogado consultando su perfil.',
+      textAlign: TextAlign.center,
+      style: const TextStyle(fontSize: 15.0),
+    ));
     for (var abogado in data) {
+      Random random = new Random();
       abogados.add(Card(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -104,18 +117,16 @@ class _MostrarAbogadoState extends State<MostrarAbogado> {
                 backgroundImage: NetworkImage(abogado.imagen),
               ),
             ),
-            Text(abogado.nombres),
-            Text(abogado.apellidos),
-            SizedBox(
-              height: 50,
-            ),
+            Text('Nombres: ' + abogado.nombres),
+            Text('Apellidos: ' + abogado.apellidos),
+            Text('Dirección: ' + abogado.direccion),
             RatingBar.builder(
-              initialRating: 3,
+              initialRating: random.nextInt(4) + 1,
               minRating: 1,
               direction: Axis.horizontal,
               allowHalfRating: true,
               itemCount: 5,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+              itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
               itemBuilder: (context, _) => Icon(
                 Icons.star,
                 color: Colors.amber,

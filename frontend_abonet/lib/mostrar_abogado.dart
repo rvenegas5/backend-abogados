@@ -10,6 +10,8 @@ dynamic infoAbogadoUser;
 dynamic infoAbogado;
 dynamic calificaciones;
 dynamic calificacionUsuario;
+dynamic textoRating;
+dynamic rating;
 
 var star = Icon(
   Icons.star,
@@ -79,7 +81,7 @@ class _MostrarAbogadoState extends State<MostrarAbogado> {
                   child: ListView(
                     children: <Widget>[
                       Container(
-                        height: 250,
+                        height: 300,
                         decoration: BoxDecoration(
                           color: Colors.blueGrey,
                         ),
@@ -139,23 +141,47 @@ class _MostrarAbogadoState extends State<MostrarAbogado> {
                                 color: Colors.white,
                               ),
                             ),
-                            RatingBar.builder(
-                              initialRating: 3,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemPadding:
-                                  EdgeInsets.symmetric(horizontal: 4.0),
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.amber,
+                            GestureDetector(
+                                    onTap: () => {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                // Retrieve the text the that user has entered by using the
+                                                // TextEditingController.
+                                                content: Text(
+                                                    "Se abrirá ventana emergente para dar o actualizar una calificación"),
+                                              );
+                                            },
+                                          )
+                                        },
+                                    child: RatingBar.builder(
+                                      ignoreGestures:true,
+                                initialRating: rating,
+                                minRating: 0,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemPadding:
+                                    EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                onRatingUpdate: (rating) {
+                                  putOrPostCalificaciones();
+                                 
+                                },
+                              )),
+                              Text(
+                              textoRating,
+                              style: TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
-                              onRatingUpdate: (rating) {
-                                putOrPostCalificaciones();
-                                print(rating);
-                              },
-                            ),
+                            )
+                            
                           ],
                         ),
                       ),
@@ -275,17 +301,20 @@ class _MostrarAbogadoState extends State<MostrarAbogado> {
 }
 
 Future<String> getInfoAbogado() async {
+  print("entramos");
   idAbogadoSeleccionado = 1;
   dynamic idUsuarioAbogado;
   var response = await http
       .get(Uri.http(url, '/abogado/' + idAbogadoSeleccionado.toString()));
   if (response.statusCode == 200) {
+    
     var jsonResponse = convert.jsonDecode(response.body);
     infoAbogado = jsonResponse;
     print('Infoabogado: $infoAbogado.');
     idUsuarioAbogado = infoAbogado["id_usuario"];
     print(idUsuarioAbogado);
   } else {
+    
     print('Request failed with status: ${response.statusCode}.');
   }
   var response2 =
@@ -297,39 +326,64 @@ Future<String> getInfoAbogado() async {
   } else {
     print('Request failed with status: ${response2.statusCode}.');
   }
-
-  getCalificaciones(idAbogadoSeleccionado);
-  return "todo ok";
+  return getCalificaciones(idAbogadoSeleccionado);
+  
 }
 
-Future<void> getCalificaciones(int abogado) async {
+Future<String> getCalificaciones(int abogado) async {
   idAbogadoSeleccionado = abogado;
-  var response3 = await http
-      .get(Uri.http(url, '/calificacion/' + idAbogadoSeleccionado.toString()));
+  var response3 =
+      await http.get(Uri.http(url, '/calificacion/' + idAbogadoSeleccionado.toString()));
   if (response3.statusCode == 200) {
     var jsonResponse3 = convert.jsonDecode(response3.body);
     calificaciones = jsonResponse3;
     print('calificaciones: $calificaciones.');
+    if(calificaciones.toString()=="[]"){
+      rating=0.0;
+      print("mostrar calificacion");
+      textoRating="Aún no hay calificaciones, se el primero en calificar!";
+      }
+  else{
+    print("esta entrando");
+    var prom=0.0;
+    var ncal=0;
+    for(var c in calificaciones){
+      
+      print(c['estrellas'].runtimeType);
+      print(c['estrellas']);
+      prom=prom+double.parse(c['estrellas']);     
+      ncal++;    
+    }
+    
+    rating=prom/ncal;
+    
+    textoRating="numero de calificaciones: "+ncal.toString();
+
+  }return "todo piola";
   } else {
     print('Request failed with status: ${response3.statusCode}.');
+    return "f";
   }
+  
 }
+
+
 
 Future<String> putOrPostCalificaciones() async {
   idAbogadoSeleccionado = 1;
   idUsuarioActual = 2;
-  if (calificaciones.toString() == "[]") {
-    print("aqui va un post de calificacion");
-    return "calif añadida";
-  }
-  for (var c in calificaciones) {
-    if (c['id_usuario'] == idUsuarioActual) {
-      print("aqui va un put");
-      return "calif actualizada";
-    }
-  }
-  ;
+    if(calificaciones.toString()=="[]"){
+      print("aqui va un post de calificacion");
+      return "calif añadida"; 
+      }
+    for(var c in calificaciones){
+      if(c['id_usuario']==idUsuarioActual){
+        print("aqui va un put");
+        return "calif actualizada";
+      }  
+    };
 
-  print("aqui va un post de calificacion");
-  return "calif añadida";
+    print("aqui va un post de calificacion");
+    return "calif añadida"; 
+  
 }
