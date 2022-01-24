@@ -1,4 +1,3 @@
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -39,6 +38,17 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Text(
+              'Abonet',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold),
+            ),
+            const Text(
+              'Login',
+              style: TextStyle(color: Colors.grey, fontSize: 30),
+            ),
             Padding(
               padding: EdgeInsets.all(10),
               child: TextField(
@@ -61,9 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Container(
               height: 50,
-              width: 250,
+              width: 200,
               decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+                  color: Colors.grey, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
                   showDialog(
@@ -84,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 },
                 child: Text(
-                  'Iniciar Sesion',
+                  'Login',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
