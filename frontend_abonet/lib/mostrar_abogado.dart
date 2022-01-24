@@ -140,23 +140,22 @@ class _MostrarAbogadoState extends State<MostrarAbogado> {
                               ),
                             ),
                             RatingBar.builder(
-                                initialRating: 3,
-                                minRating: 1,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 5,
-                                itemPadding:
-                                    EdgeInsets.symmetric(horizontal: 4.0),
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                ),
-                                onRatingUpdate: (rating) {
-                                  putOrPostCalificaciones();
-                                  print(rating);
-                                },
+                              initialRating: 3,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemPadding:
+                                  EdgeInsets.symmetric(horizontal: 4.0),
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Colors.amber,
                               ),
-                            
+                              onRatingUpdate: (rating) {
+                                putOrPostCalificaciones();
+                                print(rating);
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -305,8 +304,8 @@ Future<String> getInfoAbogado() async {
 
 Future<void> getCalificaciones(int abogado) async {
   idAbogadoSeleccionado = abogado;
-  var response3 =
-      await http.get(Uri.http(url, '/calificacion/' + idAbogadoSeleccionado.toString()));
+  var response3 = await http
+      .get(Uri.http(url, '/calificacion/' + idAbogadoSeleccionado.toString()));
   if (response3.statusCode == 200) {
     var jsonResponse3 = convert.jsonDecode(response3.body);
     calificaciones = jsonResponse3;
@@ -316,23 +315,21 @@ Future<void> getCalificaciones(int abogado) async {
   }
 }
 
-
-
 Future<String> putOrPostCalificaciones() async {
   idAbogadoSeleccionado = 1;
   idUsuarioActual = 2;
-    if(calificaciones.toString()=="[]"){
-      print("aqui va un post de calificacion");
-      return "calif añadida"; 
-      }
-    for(var c in calificaciones){
-      if(c['id_usuario']==idUsuarioActual){
-        print("aqui va un put");
-        return "calif actualizada";
-      }  
-    };
-
+  if (calificaciones.toString() == "[]") {
     print("aqui va un post de calificacion");
-    return "calif añadida"; 
-  
+    return "calif añadida";
+  }
+  for (var c in calificaciones) {
+    if (c['id_usuario'] == idUsuarioActual) {
+      print("aqui va un put");
+      return "calif actualizada";
+    }
+  }
+  ;
+
+  print("aqui va un post de calificacion");
+  return "calif añadida";
 }
