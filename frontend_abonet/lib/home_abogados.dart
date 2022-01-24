@@ -126,7 +126,14 @@ class _MostrarAbogadoState extends State<MostrarAbogado> {
             ),
             TextButton(
               child: const Text('Ver Perfil'),
-              onPressed: () {/* ... */},
+              onPressed: () => showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    content: Text("Perfil del abogado"),
+                  );
+                },
+              ),
             )
           ],
         ),
