@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 const url = 'localhost:59132';
 dynamic usuarioData;
 dynamic usuarioPass;
-dynamic res;
+dynamic res = true;
 
 void main() => runApp(MyApp());
 
@@ -126,7 +126,8 @@ Future<void> login(String email, String password) async {
   usuarioData = email;
   usuarioPass = password;
   print("entro");
-  var response = await http.get(Uri.http(url, '/auth/login/'));
+  var response =
+      await http.get(Uri.http(url, '/auth/login/' + usuarioData.toString()));
   if (response.statusCode == 200) {
     res = true;
     print("Todo OK");
